@@ -1,0 +1,104 @@
+object PrincipalFrm: TPrincipalFrm
+  Left = 271
+  Top = 114
+  Caption = 'PrincipalFrm'
+  ClientHeight = 235
+  ClientWidth = 403
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 24
+    Top = 48
+    Width = 20
+    Height = 13
+    Caption = 'Port'
+  end
+  object ButtonStart: TButton
+    Left = 24
+    Top = 8
+    Width = 75
+    Height = 25
+    Caption = 'Start'
+    TabOrder = 0
+    OnClick = ButtonStartClick
+  end
+  object ButtonStop: TButton
+    Left = 105
+    Top = 8
+    Width = 75
+    Height = 25
+    Caption = 'Stop'
+    TabOrder = 1
+    OnClick = ButtonStopClick
+  end
+  object EditPort: TEdit
+    Left = 24
+    Top = 67
+    Width = 121
+    Height = 21
+    TabOrder = 2
+    Text = '8080'
+  end
+  object ButtonOpenBrowser: TButton
+    Left = 24
+    Top = 112
+    Width = 107
+    Height = 25
+    Caption = 'Open Browser'
+    TabOrder = 3
+    OnClick = ButtonOpenBrowserClick
+  end
+  object ApplicationEvents1: TApplicationEvents
+    OnIdle = ApplicationEvents1Idle
+    Left = 288
+    Top = 24
+  end
+  object conexao: TFDConnection
+    Params.Strings = (
+      'ConnectionDef=MySQLWebServer')
+    Connected = True
+    LoginPrompt = False
+    Left = 24
+    Top = 152
+  end
+  object qryUsuario: TFDQuery
+    Connection = conexao
+    SQL.Strings = (
+      'SELECT u.cod_usuario, u.nome_usuario, u.senha, u.email, u.foto'
+      'FROM usuario u')
+    Left = 64
+    Top = 152
+    object qryUsuariocod_usuario: TFDAutoIncField
+      FieldName = 'cod_usuario'
+      Origin = 'cod_usuario'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object qryUsuarionome_usuario: TStringField
+      FieldName = 'nome_usuario'
+      Origin = 'nome_usuario'
+      Size = 40
+    end
+    object qryUsuariosenha: TStringField
+      FieldName = 'senha'
+      Origin = 'senha'
+    end
+    object qryUsuarioemail: TStringField
+      FieldName = 'email'
+      Origin = 'email'
+      Size = 100
+    end
+    object qryUsuariofoto: TBlobField
+      FieldName = 'foto'
+      Origin = 'foto'
+    end
+  end
+end

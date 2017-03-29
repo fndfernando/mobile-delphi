@@ -1,0 +1,32 @@
+{ Invokable implementation File for TBancoMySQL which implements IBancoMySQL }
+
+unit BancoMySQLImpl;
+
+interface
+
+uses Soap.InvokeRegistry, System.Types, Soap.XSBuiltIns, BancoMySQLIntf;
+
+type
+
+  { TBancoMySQL }
+  TBancoMySQL = class(TInvokableClass, IBancoMySQL)
+  public
+    function NovoUsuario(Codigo:integer;Usuario,Senha,Email:string):boolean; stdcall;
+  end;
+
+implementation
+
+
+{ TBancoMySQL }
+
+function TBancoMySQL.NovoUsuario(Codigo: integer; Usuario, Senha,
+  Email: string): boolean;
+begin
+
+end;
+
+initialization
+{ Invokable classes must be registered }
+   InvRegistry.RegisterInvokableClass(TBancoMySQL);
+end.
+

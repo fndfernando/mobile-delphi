@@ -1,0 +1,69 @@
+object WMDtm: TWMDtm
+  OldCreateOrder = False
+  Actions = <
+    item
+      Default = True
+      Name = 'DefaultHandler'
+      PathInfo = '/'
+      OnAction = WebModule1DefaultHandlerAction
+    end>
+  Height = 230
+  Width = 415
+  object HTTPSoapDispatcher1: THTTPSoapDispatcher
+    Dispatcher = HTTPSoapPascalInvoker1
+    WebDispatch.PathInfo = 'soap*'
+    Left = 60
+    Top = 11
+  end
+  object HTTPSoapPascalInvoker1: THTTPSoapPascalInvoker
+    Converter.Options = [soSendMultiRefObj, soTryAllSchema, soUTF8InHeader]
+    Left = 60
+    Top = 67
+  end
+  object WSDLHTMLPublish1: TWSDLHTMLPublish
+    WebDispatch.MethodType = mtAny
+    WebDispatch.PathInfo = 'wsdl*'
+    PublishOptions = [poUTF8ContentType]
+    Left = 60
+    Top = 123
+  end
+  object conexao: TFDConnection
+    Params.Strings = (
+      'ConnectionDef=MySQLWebServer')
+    Connected = True
+    LoginPrompt = False
+    Left = 248
+    Top = 16
+  end
+  object qryUsuario: TFDQuery
+    Connection = conexao
+    SQL.Strings = (
+      'SELECT u.cod_usuario, u.nome_usuario, u.senha, u.email, u.foto'
+      'FROM usuario u')
+    Left = 248
+    Top = 80
+    object qryUsuariocod_usuario: TFDAutoIncField
+      FieldName = 'cod_usuario'
+      Origin = 'cod_usuario'
+      ProviderFlags = [pfInWhere, pfInKey]
+    end
+    object qryUsuarionome_usuario: TStringField
+      FieldName = 'nome_usuario'
+      Origin = 'nome_usuario'
+      Size = 40
+    end
+    object qryUsuariosenha: TStringField
+      FieldName = 'senha'
+      Origin = 'senha'
+    end
+    object qryUsuarioemail: TStringField
+      FieldName = 'email'
+      Origin = 'email'
+      Size = 100
+    end
+    object qryUsuariofoto: TBlobField
+      FieldName = 'foto'
+      Origin = 'foto'
+    end
+  end
+end

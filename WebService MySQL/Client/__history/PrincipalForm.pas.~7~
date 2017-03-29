@@ -1,0 +1,42 @@
+unit PrincipalForm;
+
+interface
+
+uses
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
+  FMX.Controls.Presentation, FMX.StdCtrls;
+
+type
+  TPrincipalFrm = class(TForm)
+    btnNovoUsuario: TButton;
+    procedure btnNovoUsuarioClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  PrincipalFrm: TPrincipalFrm;
+
+implementation
+
+{$R *.fmx}
+
+uses uProxy;
+
+procedure TPrincipalFrm.btnNovoUsuarioClick(Sender: TObject);
+var
+  banco : IBancoMySQL;
+  msgErro:string;
+begin
+
+  banco := GetIBancoMySQL();
+  if (banco.NovoUsuario(0,'Fernando','1234','fnd.fernando@gmail.com',msgErro)=false) then
+    showmessage('Erro: '+msgErro)
+  else
+    showmessage('Usuário Cadastrado');
+end;
+
+end.

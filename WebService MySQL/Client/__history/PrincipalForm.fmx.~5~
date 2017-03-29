@@ -1,0 +1,75 @@
+object PrincipalFrm: TPrincipalFrm
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 394
+  ClientWidth = 337
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object btnNovoUsuario: TButton
+    Position.X = 16.000000000000000000
+    Position.Y = 184.000000000000000000
+    Size.Width = 105.000000000000000000
+    Size.Height = 49.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = 'Novo Usu'#225'rio'
+    OnClick = btnNovoUsuarioClick
+  end
+  object Label1: TLabel
+    Position.X = 16.000000000000000000
+    Position.Y = 24.000000000000000000
+    Text = 'Nome'
+  end
+  object Label2: TLabel
+    Position.X = 16.000000000000000000
+    Position.Y = 72.000000000000000000
+    Text = 'Senha'
+  end
+  object Label3: TLabel
+    Position.X = 16.000000000000000000
+    Position.Y = 120.000000000000000000
+    Text = 'E-mail'
+  end
+  object edtNome: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 4
+    Position.X = 16.000000000000000000
+    Position.Y = 44.000000000000000000
+    Size.Width = 297.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object edtSenha: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 5
+    Position.X = 16.000000000000000000
+    Position.Y = 88.000000000000000000
+  end
+  object edtEmail: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 6
+    KeyboardType = EmailAddress
+    Position.X = 16.000000000000000000
+    Position.Y = 144.000000000000000000
+    Size.Width = 297.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Label4: TLabel
+    Position.X = 16.000000000000000000
+    Position.Y = 272.000000000000000000
+    Text = 'URL'
+  end
+  object edtURL: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 9
+    Position.X = 16.000000000000000000
+    Position.Y = 296.000000000000000000
+    Size.Width = 289.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+  end
+end
