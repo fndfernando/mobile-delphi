@@ -1,0 +1,340 @@
+unit PrincipalForm;
+
+interface
+
+uses
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.StdCtrls,
+  FMX.Controls.Presentation, FMX.TabControl, System.Rtti, FMX.Grid.Style,
+  Fmx.Bind.Grid, System.Bindings.Outputs, Fmx.Bind.Editors, Data.Bind.EngExt,
+  Fmx.Bind.DBEngExt, Data.Bind.Components, Data.Bind.Grid, Data.Bind.DBScope,
+  Data.DB, FMX.ScrollBox, FMX.Grid, FMX.Edit, Fmx.Bind.Navigator,
+  System.Actions, FMX.ActnList, FMX.ListBox, FMX.EditBox, FMX.NumberBox,
+  FMX.Objects;
+
+type
+  TAcaoCadastro = (taNovo,taAlterar,taFechado);
+
+type
+  TPrincipalFrm = class(TForm)
+    TabControl1: TTabControl;
+    tbiConsulta: TTabItem;
+    tbiProduto: TTabItem;
+    tbiGrupo: TTabItem;
+    pnlConsulta: TPanel;
+    pnlProduto: TPanel;
+    grdProduto: TGrid;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    edtNomeProduto: TEdit;
+    ActionList1: TActionList;
+    btnNovo: TButton;
+    btnGravar: TButton;
+    btnProdutoCancelar: TButton;
+    btnEditar: TButton;
+    btnExclur: TButton;
+    actNovo: TAction;
+    actProdutoGravar: TAction;
+    BindingsList1: TBindingsList;
+    cmbGrupo: TComboBox;
+    Label1: TLabel;
+    BindSourceDB1: TBindSourceDB;
+    LinkGridToDataSourceBindSourceDB1: TLinkGridToDataSource;
+    BindSourceDB2: TBindSourceDB;
+    LinkFillControlToField1: TLinkFillControlToField;
+    actAlterar: TAction;
+    actProdutoCancelar: TAction;
+    actExcluir: TAction;
+    lblCodProduto: TLabel;
+    edtValorVenda: TNumberBox;
+    Label5: TLabel;
+    Label6: TLabel;
+    lblConsultaGrupo: TLabel;
+    Label7: TLabel;
+    lblConsultaVenda: TLabel;
+    LinkPropertyToFieldText: TLinkPropertyToField;
+    LinkPropertyToFieldText2: TLinkPropertyToField;
+    pnlGrupo: TPanel;
+    cmbSelecionarGrupo: TComboBox;
+    Label8: TLabel;
+    actGrupoNovo: TAction;
+    actGrupoAlterar: TAction;
+    actGrupoGravar: TAction;
+    actGrupoCancelar: TAction;
+    Line1: TLine;
+    btnGrupoNovo: TButton;
+    btnGrupoAlterar: TButton;
+    Label9: TLabel;
+    Label10: TLabel;
+    lblGrupoCodigo: TLabel;
+    edtGrupoNome: TEdit;
+    btnGrupoGravar: TButton;
+    btnGrupoCancelar: TButton;
+    LinkFillControlToField2: TLinkFillControlToField;
+    edtValorCompra: TEdit;
+    procedure actProdutoGravarExecute(Sender: TObject);
+    procedure actNovoExecute(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure actProdutoCancelarExecute(Sender: TObject);
+    procedure actAlterarExecute(Sender: TObject);
+    procedure actExcluirExecute(Sender: TObject);
+    procedure grdProdutoCellClick(const Column: TColumn; const Row: Integer);
+    procedure tbiProdutoDragEnter(Sender: TObject; const Data: TDragObject;
+      const Point: TPointF);
+    procedure actGrupoNovoExecute(Sender: TObject);
+    procedure actGrupoAlterarExecute(Sender: TObject);
+    procedure actGrupoGravarExecute(Sender: TObject);
+    procedure actGrupoCancelarExecute(Sender: TObject);
+    procedure tbiProdutoClick(Sender: TObject);
+  private
+    { Private declarations }
+    AcaoCadastro:TAcaoCadastro;
+    procedure IniciarProduto(Acao:TAcaoCadastro);
+    procedure IniciarGrupo(Acao:TAcaoCadastro);
+    procedure FecharGrupo();
+  public
+    { Public declarations }
+  end;
+
+var
+  PrincipalFrm: TPrincipalFrm;
+
+implementation
+
+{$R *.fmx}
+
+uses ConexaoDM;
+
+procedure TPrincipalFrm.actProdutoCancelarExecute(Sender: TObject);
+begin
+  ConexaoDtm.qryProduto.Cancel;
+  AcaoCadastro:=taFechado;
+  TabControl1.ActiveTab:=tbiConsulta;
+end;
+
+procedure TPrincipalFrm.actProdutoGravarExecute(Sender: TObject);
+var
+  ID,CodGrupo:integer;
+begin
+  CodGrupo:=0;
+  if (cmbGrupo.ItemIndex>=0) then
+    CodGrupo:=ConexaoDtm.PegarCodGrupo(cmbGrupo.Selected.Text);
+  if (AcaoCadastro=taAlterar) then
+  begin
+    ID:=StrToInt(lblCodProduto.Text);
+    ConexaoDtm.qryProduto.Edit
+  end
+  else
+  if (AcaoCadastro=taNovo) then
+  begin
+    ID:=ConexaoDtm.GerarID('idproduto');
+    ConexaoDtm.qryProduto.Append;
+    ConexaoDtm.qryProduto.FieldByName('cod_produto').AsInteger:=ID;
+  end;
+  ConexaoDtm.qryProduto.FieldByName('nome_produto').AsString:=edtNomeProduto.Text;
+  if (edtValorCompra.Text<>'') then
+    ConexaoDtm.qryProduto.FieldByName('valor_compra').AsFloat:=StrToFloat(edtValorCompra.Text)
+  else
+    ConexaoDtm.qryProduto.FieldByName('valor_compra').AsFloat:=0;
+  if (edtValorVenda.Text<>'') then
+    ConexaoDtm.qryProduto.FieldByName('valor_venda').AsFloat:=StrToFloat(edtValorVenda.Text)
+  else
+    ConexaoDtm.qryProduto.FieldByName('valor_venda').AsFloat:=0;
+  ConexaoDtm.qryProduto.FieldByName('cod_grupo').AsInteger:=CodGrupo;
+  ConexaoDtm.qryProduto.Post;
+
+  ConexaoDtm.qryProduto.Refresh;
+
+  AcaoCadastro:=taFechado;
+  TabControl1.ActiveTab:=tbiConsulta;
+end;
+
+procedure TPrincipalFrm.actAlterarExecute(Sender: TObject);
+begin
+  if (grdProduto.Selected.ToString='') then
+    showmessage('Selecione um produto')
+  else
+    IniciarProduto(taAlterar);
+end;
+
+procedure TPrincipalFrm.actExcluirExecute(Sender: TObject);
+begin
+  if (grdProduto.Selected.ToString='') then
+    showmessage('Selecione um produto')
+  else
+  begin
+    MessageDlg('Deseja realmente excluir?', System.UITypes.TMsgDlgType.mtInformation,
+    [
+      System.UITypes.TMsgDlgBtn.mbYes,
+      System.UITypes.TMsgDlgBtn.mbNo
+    ], 0,
+    procedure(const AResult: System.UITypes.TModalResult)
+    begin
+      case AResult of
+        mrYES:
+          ConexaoDtm.qryProduto.Delete;
+      end;
+    end);
+  end;
+  {if (MessageDlg('Deseja realmente excluir?',TMsgDlgType.mtConfirmation,[TMsgDlgBtn.mbYes,TMsgDlgBtn.mbNo],0)=mryes) then
+  begin
+    ConexaoDtm.qryProduto.Delete;
+  end;  }
+end;
+
+procedure TPrincipalFrm.actGrupoAlterarExecute(Sender: TObject);
+begin
+  if (cmbSelecionarGrupo.ItemIndex=-1) then
+    ShowMessage('Selecione um grupo')
+  else
+    IniciarGrupo(taAlterar);
+end;
+
+procedure TPrincipalFrm.actGrupoCancelarExecute(Sender: TObject);
+begin
+  ConexaoDtm.qryGrupo.Cancel;
+  FecharGrupo();
+end;
+
+procedure TPrincipalFrm.actGrupoGravarExecute(Sender: TObject);
+var
+  ID:integer;
+begin
+  if (lblGrupoCodigo.Text='000') then
+  begin
+    ID:=ConexaoDtm.GerarID('idgrupo');
+    ConexaoDtm.qryGrupo.Append;
+    ConexaoDtm.qryGrupo.FieldByName('cod_grupo').AsInteger:=ID;
+  end
+  else
+    ConexaoDtm.qryGrupo.Edit;
+  ConexaoDtm.qryGrupo.FieldByName('nome_grupo').AsString:=edtGrupoNome.Text;
+  ConexaoDtm.qryGrupo.Post;
+  ConexaoDtm.qryGrupo.Close;
+  ConexaoDtm.qryGrupo.Open();
+  FecharGrupo();
+end;
+
+procedure TPrincipalFrm.actGrupoNovoExecute(Sender: TObject);
+begin
+  IniciarGrupo(taNovo);
+end;
+
+procedure TPrincipalFrm.actNovoExecute(Sender: TObject);
+begin
+  IniciarProduto(taNovo);
+end;
+
+procedure TPrincipalFrm.FecharGrupo();
+begin
+  lblGrupoCodigo.Text:='000';
+  edtGrupoNome.Text:='';
+  edtGrupoNome.ReadOnly:=true;
+  actGrupoGravar.Enabled:=false;
+  actGrupoCancelar.Enabled:=false;
+
+  cmbSelecionarGrupo.Enabled:=true;
+  actGrupoNovo.Enabled:=true;
+  actGrupoAlterar.Enabled:=true;
+end;
+
+procedure TPrincipalFrm.FormCreate(Sender: TObject);
+begin
+  TabControl1.ActiveTab:=tbiConsulta;
+  ConexaoDtm.qryProduto.Open();
+  ConexaoDtm.qryGrupo.Open();
+  AcaoCadastro:=taFechado;
+end;
+
+procedure TPrincipalFrm.grdProdutoCellClick(const Column: TColumn;
+  const Row: Integer);
+begin
+  grdProduto.SelectRow(row);
+end;
+
+procedure TPrincipalFrm.IniciarGrupo(Acao: TAcaoCadastro);
+begin
+  lblGrupoCodigo.Text:='000';
+  edtGrupoNome.Text:='';
+  if (Acao=taAlterar) then
+  begin
+    if (ConexaoDtm.qryGrupo.Locate('nome_grupo',cmbSelecionarGrupo.Selected.Text,[locaseInsensitive])) then
+    begin
+      lblGrupoCodigo.Text:=Format('%3.3d',[ConexaoDtm.qryGrupo.FieldByName('cod_grupo').AsInteger]);
+      edtGrupoNome.Text:=ConexaoDtm.qryGrupo.FieldByName('nome_grupo').AsString;
+    end;
+  end;
+  edtGrupoNome.ReadOnly:=false;
+  actGrupoGravar.Enabled:=true;
+  actGrupoCancelar.Enabled:=true;
+
+  cmbSelecionarGrupo.Enabled:=false;
+  actGrupoNovo.Enabled:=false;
+  actGrupoAlterar.Enabled:=false;
+  edtGrupoNome.SetFocus;
+end;
+
+procedure TPrincipalFrm.IniciarProduto(Acao: TAcaoCadastro);
+var
+ i:integer;
+begin
+  AcaoCadastro:=Acao;
+  TabControl1.ActiveTab:=tbiProduto;
+  ConexaoDtm.qryGrupo.Open();
+
+  lblCodProduto.Text:='0';
+  edtNomeProduto.Text:='';
+  cmbGrupo.ItemIndex:=-1;
+  edtValorCompra.Text:='';
+  edtValorVenda.Text:='';
+
+  if (Acao=taAlterar) then
+  begin
+    lblCodProduto.Text:=Format('%3.3d',[ConexaoDtm.qryProduto.FieldByName('cod_produto').AsInteger]);
+    edtNomeProduto.Text:=ConexaoDtm.qryProduto.FieldByName('nome_produto').AsString;
+    edtValorCompra.Text:=FormatFloat('#0.00',ConexaoDtm.qryProduto.FieldByName('valor_compra').AsFloat);
+    edtValorVenda.Text:=FormatFloat('#0.00',ConexaoDtm.qryProduto.FieldByName('valor_venda').AsFloat);
+    if (ConexaoDtm.qryProduto.FieldByName('nome_grupo').AsString<>'') then
+    begin
+      for i := 0 to cmbGrupo.Items.Count-1 do
+        if (cmbGrupo.Items.Strings[i]=ConexaoDtm.qryProduto.FieldByName('nome_grupo').AsString) then
+          cmbGrupo.ItemIndex:=i;
+    end;
+  end;
+end;
+
+procedure TPrincipalFrm.tbiProdutoClick(Sender: TObject);
+begin
+  showmessage('NECESSÁRIO SELECIONAR PRODUTO NO GRID');
+  TabControl1.ActiveTab:=tbiConsulta;
+end;
+
+procedure TPrincipalFrm.tbiProdutoDragEnter(Sender: TObject;
+  const Data: TDragObject; const Point: TPointF);
+begin
+  if (AcaoCadastro=taFechado) then
+  begin
+    lblCodProduto.Text:='0';
+    edtNomeProduto.Text:='';
+    edtNomeProduto.ReadOnly:=true;
+    edtValorCompra.Text:='0';
+    edtValorCompra.ReadOnly:=true;
+    edtValorVenda.Text:='0';
+    edtValorVenda.ReadOnly:=true;
+    cmbGrupo.Enabled:=false;
+    actProdutoGravar.Enabled:=false;
+    actProdutoCancelar.Enabled:=false;
+  end
+  else
+  begin
+    edtNomeProduto.ReadOnly:=false;
+    edtValorCompra.ReadOnly:=false;
+    edtValorVenda.ReadOnly:=false;
+    cmbGrupo.Enabled:=true;
+    actProdutoGravar.Enabled:=true;
+    actProdutoCancelar.Enabled:=true;
+  end;
+end;
+
+end.

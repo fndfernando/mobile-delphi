@@ -1,0 +1,101 @@
+object ConexaoDtm: TConexaoDtm
+  OldCreateOrder = False
+  Height = 257
+  Width = 309
+  object conexao: TFDConnection
+    Params.Strings = (
+      'Database=D:\UTILITARIOS\Android\mobile-delphi\CRUD\CRUD.db'
+      'DriverID=SQLite')
+    LoginPrompt = False
+    BeforeConnect = conexaoBeforeConnect
+    Left = 40
+    Top = 24
+  end
+  object updProduto: TFDUpdateSQL
+    Connection = conexao
+    InsertSQL.Strings = (
+      'INSERT INTO PRODUTO'
+      '(COD_PRODUTO, NOME_PRODUTO, COD_GRUPO, VALOR_COMPRA, '
+      '  VALOR_VENDA, FOTO)'
+      
+        'VALUES (:NEW_COD_PRODUTO, :NEW_NOME_PRODUTO, :NEW_COD_GRUPO, :NE' +
+        'W_VALOR_COMPRA, '
+      '  :NEW_VALOR_VENDA, :NEW_FOTO)')
+    ModifySQL.Strings = (
+      'UPDATE PRODUTO'
+      
+        'SET COD_PRODUTO = :NEW_COD_PRODUTO, NOME_PRODUTO = :NEW_NOME_PRO' +
+        'DUTO, '
+      '  COD_GRUPO = :NEW_COD_GRUPO, VALOR_COMPRA = :NEW_VALOR_COMPRA, '
+      '  VALOR_VENDA = :NEW_VALOR_VENDA, FOTO = :NEW_FOTO'
+      'WHERE COD_PRODUTO = :OLD_COD_PRODUTO;'
+      
+        'SELECT COD_PRODUTO, NOME_PRODUTO, COD_GRUPO, VALOR_COMPRA, VALOR' +
+        '_VENDA, '
+      '  FOTO'
+      'FROM PRODUTO'
+      'WHERE COD_PRODUTO = :NEW_COD_PRODUTO')
+    DeleteSQL.Strings = (
+      'DELETE FROM PRODUTO'
+      'WHERE COD_PRODUTO = :OLD_COD_PRODUTO')
+    FetchRowSQL.Strings = (
+      
+        'SELECT COD_PRODUTO, NOME_PRODUTO, COD_GRUPO, VALOR_COMPRA, VALOR' +
+        '_VENDA, '
+      '  FOTO'
+      'FROM PRODUTO'
+      'WHERE COD_PRODUTO = :COD_PRODUTO')
+    Left = 240
+    Top = 24
+  end
+  object qryProduto: TFDQuery
+    Connection = conexao
+    SQL.Strings = (
+      'SELECT p.cod_produto,'
+      '       p.nome_produto,'
+      '       p.cod_grupo,'
+      '       g.nome_grupo,'
+      '       p.valor_compra,'
+      '       p.valor_venda,'
+      '       p.foto'
+      'FROM produto p LEFT'
+      'JOIN grupo_produto g ON g.cod_grupo=p.cod_grupo'
+      'ORDER BY p.cod_produto')
+    Left = 136
+    Top = 24
+  end
+  object qryGrupo: TFDQuery
+    Connection = conexao
+    SQL.Strings = (
+      'SELECT g.cod_grupo,'
+      '       g.nome_grupo'
+      'FROM grupo_produto g')
+    Left = 136
+    Top = 88
+  end
+  object updGrupo: TFDUpdateSQL
+    Connection = conexao
+    InsertSQL.Strings = (
+      'INSERT INTO GRUPO_PRODUTO'
+      '(COD_GRUPO, NOME_GRUPO)'
+      'VALUES (:NEW_COD_GRUPO, :NEW_NOME_GRUPO)')
+    ModifySQL.Strings = (
+      'UPDATE GRUPO_PRODUTO'
+      'SET COD_GRUPO = :NEW_COD_GRUPO, NOME_GRUPO = :NEW_NOME_GRUPO'
+      'WHERE COD_GRUPO = :OLD_COD_GRUPO')
+    DeleteSQL.Strings = (
+      'DELETE FROM GRUPO_PRODUTO'
+      'WHERE COD_GRUPO = :OLD_COD_GRUPO')
+    FetchRowSQL.Strings = (
+      'SELECT COD_GRUPO, NOME_GRUPO'
+      'FROM GRUPO_PRODUTO'
+      'WHERE COD_GRUPO = :COD_GRUPO')
+    Left = 240
+    Top = 88
+  end
+  object qryGerarID: TFDQuery
+    Connection = conexao
+    Left = 136
+    Top = 152
+  end
+end

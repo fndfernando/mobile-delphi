@@ -1,0 +1,546 @@
+object PrincipalFrm: TPrincipalFrm
+  Left = 747
+  Top = 0
+  Caption = 'CRUD - SQLite'
+  ClientHeight = 480
+  ClientWidth = 473
+  Position = Designed
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  Left = 747
+  DesignerMasterStyle = 3
+  object TabControl1: TTabControl
+    Align = Client
+    Size.Width = 473.000000000000000000
+    Size.Height = 480.000000000000000000
+    Size.PlatformDefault = False
+    TabHeight = 49.000000000000000000
+    TabIndex = 1
+    TabOrder = 0
+    TabPosition = PlatformDefault
+    Sizes = (
+      473s
+      431s
+      473s
+      431s
+      473s
+      431s)
+    object tbiConsulta: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 157.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'CONSULTA'
+      ExplicitSize.cx = 194.000000000000000000
+      ExplicitSize.cy = 49.000000000000000000
+      object pnlConsulta: TPanel
+        Align = Client
+        Size.Width = 473.000000000000000000
+        Size.Height = 431.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        object grdProduto: TGrid
+          Anchors = [akLeft, akTop, akRight, akBottom]
+          CanFocus = True
+          ClipChildren = True
+          Position.X = 8.000000000000000000
+          Position.Y = 11.000000000000000000
+          Size.Width = 459.000000000000000000
+          Size.Height = 246.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 16.000000000000000000
+          StyledSettings = [Family, Style, FontColor]
+          TabOrder = 0
+          RowCount = 0
+          Options = [ColumnResize, ColumnMove, ColLines, RowLines, RowSelect, Tabs, Header, HeaderClick, AutoDisplacement]
+          OnCellClick = grdProdutoCellClick
+          Viewport.Width = 459.000000000000000000
+          Viewport.Height = 214.000000000000000000
+        end
+        object btnNovo: TButton
+          Action = actNovo
+          Anchors = [akRight, akBottom]
+          Enabled = True
+          ImageIndex = -1
+          Position.X = 330.000000000000000000
+          Position.Y = 276.000000000000000000
+          Size.Width = 130.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+        end
+        object btnEditar: TButton
+          Action = actAlterar
+          Anchors = [akRight, akBottom]
+          Enabled = True
+          ImageIndex = -1
+          Position.X = 331.000000000000000000
+          Position.Y = 323.000000000000000000
+          Size.Width = 130.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 2
+        end
+        object btnExclur: TButton
+          Action = actExcluir
+          Anchors = [akRight, akBottom]
+          Enabled = True
+          ImageIndex = -1
+          Position.X = 331.000000000000000000
+          Position.Y = 371.000000000000000000
+          Size.Width = 130.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 3
+        end
+        object Label6: TLabel
+          Anchors = [akLeft, akBottom]
+          Position.X = 11.000000000000000000
+          Position.Y = 265.000000000000000000
+          Size.Width = 62.000000000000000000
+          Size.Height = 23.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Grupo:'
+          TabOrder = 4
+        end
+        object lblConsultaGrupo: TLabel
+          Anchors = [akLeft, akRight, akBottom]
+          Position.X = 11.000000000000000000
+          Position.Y = 289.000000000000000000
+          Size.Width = 310.000000000000000000
+          Size.Height = 23.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Grupo'
+          TabOrder = 5
+        end
+        object Label7: TLabel
+          Anchors = [akLeft, akBottom]
+          Position.X = 11.000000000000000000
+          Position.Y = 321.000000000000000000
+          Size.Width = 65.000000000000000000
+          Size.Height = 23.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Venda:'
+          TabOrder = 6
+        end
+        object lblConsultaVenda: TLabel
+          Anchors = [akLeft, akBottom]
+          Position.X = 80.000000000000000000
+          Position.Y = 321.000000000000000000
+          Size.Width = 169.000000000000000000
+          Size.Height = 23.000000000000000000
+          Size.PlatformDefault = False
+          Text = '0,00'
+          TabOrder = 7
+        end
+      end
+    end
+    object tbiProduto: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = True
+      Size.Width = 157.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'PRODUTO'
+      OnDragEnter = tbiProdutoDragEnter
+      OnClick = tbiProdutoClick
+      ExplicitSize.cx = 194.000000000000000000
+      ExplicitSize.cy = 49.000000000000000000
+      object pnlProduto: TPanel
+        Align = Client
+        Size.Width = 473.000000000000000000
+        Size.Height = 431.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        object Label2: TLabel
+          Position.X = 7.000000000000000000
+          Position.Y = 16.000000000000000000
+          Size.Width = 73.000000000000000000
+          Size.Height = 23.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'C'#243'digo:'
+          TabOrder = 6
+        end
+        object Label3: TLabel
+          Position.X = 8.000000000000000000
+          Position.Y = 43.000000000000000000
+          Size.Width = 105.000000000000000000
+          Size.Height = 23.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Produto'
+          TabOrder = 7
+        end
+        object Label4: TLabel
+          Position.X = 8.000000000000000000
+          Position.Y = 231.000000000000000000
+          Size.Width = 105.000000000000000000
+          Size.Height = 23.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Valor Venda'
+          TabOrder = 9
+        end
+        object edtNomeProduto: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Anchors = [akLeft, akTop, akRight]
+          TabOrder = 0
+          ControlType = Platform
+          Position.X = 8.000000000000000000
+          Position.Y = 70.000000000000000000
+          Size.Width = 457.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+        end
+        object btnGravar: TButton
+          Action = actProdutoGravar
+          Anchors = [akRight, akBottom]
+          ControlType = Platform
+          Enabled = True
+          ImageIndex = -1
+          Position.X = 339.000000000000000000
+          Position.Y = 318.000000000000000000
+          Size.Width = 115.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 4
+        end
+        object btnProdutoCancelar: TButton
+          Action = actProdutoCancelar
+          Anchors = [akRight, akBottom]
+          Enabled = True
+          ImageIndex = -1
+          Position.X = 338.000000000000000000
+          Position.Y = 369.000000000000000000
+          Size.Width = 115.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 5
+        end
+        object cmbGrupo: TComboBox
+          Anchors = [akLeft, akTop, akRight]
+          Position.X = 8.000000000000000000
+          Position.Y = 131.000000000000000000
+          Size.Width = 457.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+        end
+        object Label1: TLabel
+          Position.X = 8.000000000000000000
+          Position.Y = 104.000000000000000000
+          Size.Width = 57.000000000000000000
+          Size.Height = 23.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Grupo'
+          TabOrder = 10
+        end
+        object lblCodProduto: TLabel
+          Position.X = 87.000000000000000000
+          Position.Y = 16.000000000000000000
+          Text = '000'
+          TabOrder = 11
+        end
+        object Label5: TLabel
+          Position.X = 8.000000000000000000
+          Position.Y = 181.000000000000000000
+          Size.Width = 129.000000000000000000
+          Size.Height = 23.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Valor Compra'
+          TabOrder = 8
+        end
+        object edtValorCompra: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          TabOrder = 2
+          ControlType = Platform
+          KeyboardType = DecimalNumberPad
+          FilterChar = '1234567890,.'
+          TextSettings.HorzAlign = Trailing
+          Position.X = 154.000000000000000000
+          Position.Y = 176.000000000000000000
+          Size.Width = 108.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextPrompt = '0,00'
+          OnExit = edtValorCompraExit
+        end
+        object edtValorVenda: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          TabOrder = 3
+          ControlType = Platform
+          KeyboardType = DecimalNumberPad
+          FilterChar = '1234567890,.'
+          TextSettings.HorzAlign = Trailing
+          Position.X = 154.000000000000000000
+          Position.Y = 224.000000000000000000
+          Size.Width = 108.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextPrompt = '0,00'
+          OnExit = edtValorVendaExit
+        end
+      end
+    end
+    object tbiGrupo: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 159.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'GRUPO'
+      ExplicitSize.cx = 196.000000000000000000
+      ExplicitSize.cy = 49.000000000000000000
+      object pnlGrupo: TPanel
+        Align = Client
+        Size.Width = 473.000000000000000000
+        Size.Height = 431.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        object cmbSelecionarGrupo: TComboBox
+          Anchors = [akLeft, akTop, akRight]
+          Position.X = 8.000000000000000000
+          Position.Y = 39.000000000000000000
+          Size.Width = 457.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+        end
+        object Label8: TLabel
+          Position.X = 8.000000000000000000
+          Position.Y = 8.000000000000000000
+          Size.Width = 161.000000000000000000
+          Size.Height = 23.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Selecione o Grupo'
+          TabOrder = 1
+        end
+        object Line1: TLine
+          Anchors = [akLeft, akTop, akRight]
+          LineType = Top
+          Position.X = 8.000000000000000000
+          Position.Y = 128.000000000000000000
+          Size.Width = 457.000000000000000000
+          Size.Height = 9.000000000000000000
+          Size.PlatformDefault = False
+        end
+        object btnGrupoNovo: TButton
+          Action = actGrupoNovo
+          Anchors = [akTop, akRight]
+          Enabled = True
+          ImageIndex = -1
+          Position.X = 226.000000000000000000
+          Position.Y = 77.000000000000000000
+          Size.Width = 115.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 3
+        end
+        object btnGrupoAlterar: TButton
+          Action = actGrupoAlterar
+          Anchors = [akTop, akRight]
+          Enabled = True
+          ImageIndex = -1
+          Position.X = 344.000000000000000000
+          Position.Y = 77.000000000000000000
+          Size.Width = 115.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 4
+        end
+        object Label9: TLabel
+          Position.X = 8.000000000000000000
+          Position.Y = 144.000000000000000000
+          Size.Width = 70.000000000000000000
+          Size.Height = 23.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'C'#243'digo:'
+          TabOrder = 5
+        end
+        object Label10: TLabel
+          Position.X = 8.000000000000000000
+          Position.Y = 171.000000000000000000
+          Size.Width = 70.000000000000000000
+          Size.Height = 23.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Grupo:'
+          TabOrder = 6
+        end
+        object lblGrupoCodigo: TLabel
+          Position.X = 80.000000000000000000
+          Position.Y = 144.000000000000000000
+          Text = '000'
+          TabOrder = 7
+        end
+        object edtGrupoNome: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Anchors = [akLeft, akTop, akRight]
+          TabOrder = 8
+          ReadOnly = True
+          Position.X = 8.000000000000000000
+          Position.Y = 200.000000000000000000
+          Size.Width = 457.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+        end
+        object btnGrupoGravar: TButton
+          Action = actGrupoGravar
+          Anchors = [akRight, akBottom]
+          Enabled = False
+          ImageIndex = -1
+          Position.X = 344.000000000000000000
+          Position.Y = 256.000000000000000000
+          Size.Width = 115.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 9
+        end
+        object btnGrupoCancelar: TButton
+          Action = actGrupoCancelar
+          Anchors = [akRight, akBottom]
+          Enabled = False
+          ImageIndex = -1
+          Position.X = 344.000000000000000000
+          Position.Y = 304.000000000000000000
+          Size.Width = 115.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 10
+        end
+      end
+    end
+  end
+  object ActionList1: TActionList
+    Left = 192
+    Top = 9
+    object actNovo: TAction
+      Category = 'Consulta'
+      Text = 'Novo'
+      OnExecute = actNovoExecute
+    end
+    object actProdutoGravar: TAction
+      Category = 'Produto'
+      Text = 'Gravar'
+      OnExecute = actProdutoGravarExecute
+    end
+    object actAlterar: TAction
+      Category = 'Consulta'
+      Text = 'Alterar'
+      OnExecute = actAlterarExecute
+    end
+    object actProdutoCancelar: TAction
+      Category = 'Produto'
+      Text = 'Cancelar'
+      OnExecute = actProdutoCancelarExecute
+    end
+    object actExcluir: TAction
+      Category = 'Consulta'
+      Text = 'Excluir'
+      OnExecute = actExcluirExecute
+    end
+    object actGrupoNovo: TAction
+      Category = 'Grupo'
+      Text = 'Novo'
+      OnExecute = actGrupoNovoExecute
+    end
+    object actGrupoAlterar: TAction
+      Category = 'Grupo'
+      Text = 'Alterar'
+      OnExecute = actGrupoAlterarExecute
+    end
+    object actGrupoGravar: TAction
+      Category = 'Grupo'
+      Text = 'Gravar'
+      Enabled = False
+      OnExecute = actGrupoGravarExecute
+    end
+    object actGrupoCancelar: TAction
+      Category = 'Grupo'
+      Text = 'Cancelar'
+      Enabled = False
+      OnExecute = actGrupoCancelarExecute
+    end
+  end
+  object BindingsList1: TBindingsList
+    Methods = <>
+    OutputConverters = <>
+    Left = 20
+    Top = 5
+    object LinkGridToDataSourceBindSourceDB1: TLinkGridToDataSource
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB1
+      GridControl = grdProduto
+      Columns = <
+        item
+          MemberName = 'cod_produto'
+          Header = 'C'#211'DIGO'
+        end
+        item
+          MemberName = 'nome_produto'
+          Header = 'PRODUTO'
+          Width = 350
+        end>
+    end
+    object LinkFillControlToField1: TLinkFillControlToField
+      Category = 'Quick Bindings'
+      Control = cmbGrupo
+      Track = True
+      FillDataSource = BindSourceDB2
+      FillDisplayFieldName = 'nome_grupo'
+      AutoFill = True
+      FillExpressions = <>
+      FillHeaderExpressions = <>
+      FillBreakGroups = <>
+    end
+    object LinkPropertyToFieldText: TLinkPropertyToField
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB1
+      FieldName = 'nome_grupo'
+      Component = lblConsultaGrupo
+      ComponentProperty = 'Text'
+    end
+    object LinkPropertyToFieldText2: TLinkPropertyToField
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB1
+      FieldName = 'valor_venda'
+      Component = lblConsultaVenda
+      ComponentProperty = 'Text'
+    end
+    object LinkFillControlToField2: TLinkFillControlToField
+      Category = 'Quick Bindings'
+      Control = cmbSelecionarGrupo
+      Track = True
+      FillDataSource = BindSourceDB2
+      FillDisplayFieldName = 'nome_grupo'
+      AutoFill = True
+      FillExpressions = <>
+      FillHeaderExpressions = <>
+      FillBreakGroups = <>
+    end
+  end
+  object BindSourceDB1: TBindSourceDB
+    DataSet = ConexaoDtm.qryProduto
+    ScopeMappings = <>
+    Left = 56
+    Top = 8
+  end
+  object BindSourceDB2: TBindSourceDB
+    DataSet = ConexaoDtm.qryGrupo
+    ScopeMappings = <>
+    Left = 88
+    Top = 8
+  end
+end
